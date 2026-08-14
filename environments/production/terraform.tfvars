@@ -1,6 +1,6 @@
-project_name         = "my-practice-project"
+project_name         = "my-app"
 aws_region           = "ap-south-1"
 environment          = "production"
-eks_cluster_name     = "my-practice-eks-cluster"
+eks_cluster_name     = "my-app-eks-cluster"
 worker_instance_type = "t3.medium"
 eks_version          = "1.35"
