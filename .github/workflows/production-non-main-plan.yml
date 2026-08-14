@@ -1,0 +1,25 @@
+name: Production - Non-Main Plan
+
+on:
+    pull_request:
+        branches:
+            - main
+        paths:
+            - "environments/production/**"
+            - "modules/**"
+            - ".github/workflows/production-non-main-plan.yml"
+
+jobs:
+    terraform-plan:
+        name: Terraform Plan
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v7
+            
+            - name: Verify Checkout
+              run: |
+                echo "Current branch: ${{ github.head_ref }}"
+                echo "Base branch: ${{ github.base_ref }}"
+                pwd
+                ls -la
