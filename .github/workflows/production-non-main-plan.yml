@@ -19,6 +19,7 @@ jobs:
             
             - name: Verify Checkout
               run: |
+                echo "Repository checked out successfully"
                 echo "Current branch: ${{ github.head_ref }}"
                 echo "Base branch: ${{ github.base_ref }}"
                 pwd
