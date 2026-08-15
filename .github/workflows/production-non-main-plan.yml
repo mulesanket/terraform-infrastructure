@@ -16,13 +16,11 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v7
+
+            - name: Setup Terraform
+              uses: hashicorp/setup-terraform@v4
+              with:
+                  terraform_version: 1.14.6
             
-            - name: Verify Checkout
-              run: |
-                echo "Repository checked out successfully"
-                echo "Current branch: ${{ github.head_ref }}"
-                echo "Base branch: ${{ github.base_ref }}"
-                pwd
-                ls -la
-                echo "Terraform version:"
-                terraform --version
+            - name: Terraform Verify
+              run: terraform version
