@@ -24,3 +24,5 @@ jobs:
                 echo "Base branch: ${{ github.base_ref }}"
                 pwd
                 ls -la
+                echo "Terraform version:"
+                terraform --version
