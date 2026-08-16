@@ -29,8 +29,12 @@ jobs:
               working-directory: .    
               run: terraform fmt -check -diff -recursive
 
-            - name: Terraform validate
+            - name: Terraform init
               working-directory: environments/production
-              run: terraform validate
+              run: terraform init
+
+            - name: Terraform plan
+              working-directory: environments/production
+              run: terraform plan 
 
             
