@@ -20,7 +20,7 @@ jobs:
             - name: Setup Terraform
               uses: hashicorp/setup-terraform@v4
               with:
-                  terraform_version: 1.15.8
+                  terraform_version: 1.15.5
             
             - name: Terraform Verify
               run: terraform version
@@ -28,3 +28,9 @@ jobs:
             - name: Terraform Format Check
               working-directory: .    
               run: terraform fmt -check -recursive
+
+            - name: Terraform validate
+              working-directory: environments/production
+              run: terraform validate
+
+            
