@@ -1,4 +1,4 @@
-﻿module "vpc" {
+module "vpc" {
   source               = "../../modules/vpc"
   project_name         = var.project_name
   eks_cluster_name     = var.eks_cluster_name
