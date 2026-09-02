@@ -31,14 +31,3 @@ variable "worker_instance_type" {
   description = "EKS worker nodes instance type"
   type        = string
 }
-
-variable "db_master_password" {
-  description = "Master password for Aurora PostgreSQL"
-  type        = string
-  sensitive   = true
-}
-
-variable "ses_sender_email" {
-  description = "Verified SES sender email for welcome emails"
-  type        = string
-}
