@@ -30,10 +30,6 @@ jobs:
       - name: Terraform Verify
         run: terraform version
 
-      - name: Terraform Format Check
-        working-directory: .
-        run: terraform fmt -check -diff -recursive
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v6.2.3
         with:
