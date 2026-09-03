@@ -58,10 +58,6 @@ jobs:
         working-directory: environments/production
         run: terraform init
 
-      - name: Show Terraform Plan
-        working-directory: environments/production
-        run: terraform show tfplan
-
       - name: Terraform Apply
         working-directory: environments/production
         run: terraform apply tfplan
