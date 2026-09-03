@@ -1,0 +1,67 @@
+name: Production - Main Apply
+
+on:
+  workflow_run:
+    workflows:
+      - "Production - Main Plan"
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+  id-token: write
+
+jobs:
+  terraform-apply:
+    name: Terraform Production Apply
+
+    # Run only if Main Plan succeeded and it was for main
+    if: >
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main'
+
+    runs-on: ubuntu-latest
+
+    # This creates manual production approval gate
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.15.5
+
+      - name: Download Terraform Plan
+        uses: actions/download-artifact@v8
+        with:
+          name: production-tfplan
+          path: environments/production
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6.2.3
+        with:
+          role-to-assume: arn:aws:iam::315435444725:role/GitHubActions-Terraform-Production-Apply-Role
+          aws-region: ap-south-1
+
+      - name: Verify AWS Identity
+        run: aws sts get-caller-identity
+
+      - name: Terraform Init
+        working-directory: environments/production
+        run: terraform init
+
+      - name: Show Terraform Plan
+        working-directory: environments/production
+        run: terraform show tfplan
+
+      - name: Terraform Apply
+        working-directory: environments/production
+        run: terraform apply tfplan
